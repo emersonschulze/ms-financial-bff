@@ -37,3 +37,80 @@ export interface CreateCategoryRequest { name: string; type: number; description
 export interface UpdateCategoryRequest { name: string; type: number; description: string | null; }
 export interface CreateTransactionRequest { accountId: string; categoryId: number; description: string; amount: number; type: number; date: string; notes: string | null; }
 export interface UpdateTransactionRequest { accountId: string; categoryId: number; description: string; amount: number; type: number; date: string; notes: string | null; }
+
+// ── Module ────────────────────────────────────────────────────────────────────
+export interface ModuleModel { id: number; description: string; }
+
+// ── TypeExpense ────────────────────────────────────────────────────────────────
+export interface TypeExpenseModel {
+  id:                number;
+  description:       string;
+  moduleId:          number;
+  moduleDescription: string;
+  isActive:          boolean;
+}
+export interface CreateTypeExpenseRequest { description: string; moduleId: number; }
+export interface UpdateTypeExpenseRequest { description?: string; moduleId?: number; }
+
+// ── TypeMaintenance ────────────────────────────────────────────────────────────
+export interface TypeMaintenanceModel { id: number; description: string; }
+
+// ── ProductUnitOfMeasure ───────────────────────────────────────────────────────
+export interface ProductUnitOfMeasureModel { id: number; description: string; symbol: string; }
+
+// ── ProductCategory ────────────────────────────────────────────────────────────
+export interface ProductCategoryModel { id: number; description: string; }
+export interface CreateProductCategoryRequest { description: string; }
+export interface UpdateProductCategoryRequest { description?: string; }
+
+// ── Product ────────────────────────────────────────────────────────────────────
+export interface ProductModel {
+  id:                              number;
+  description:                     string;
+  productCategoryId:               number;
+  productCategoryDescription:      string;
+  productUnitOfMeasureId:          number;
+  productUnitOfMeasureDescription: string;
+  productUnitOfMeasureSymbol:      string;
+  isActive:                        boolean;
+}
+export interface CreateProductRequest { description: string; productCategoryId: number; productUnitOfMeasureId: number; }
+export interface UpdateProductRequest { description?: string; productCategoryId?: number; productUnitOfMeasureId?: number; }
+
+// ── Expense ────────────────────────────────────────────────────────────────────
+export interface ExpenseModel {
+  id:                     number;
+  codeExpense:            string;
+  description:            string;
+  typeExpenseId:          number;
+  typeExpenseDescription: string;
+  farmId:                 string;
+  purchaseDate:           string;
+  dueDate:                string;
+}
+export interface CreateExpenseRequest { codeExpense: string; description: string; typeExpenseId: number; farmId: string; purchaseDate: string; dueDate: string; }
+export interface UpdateExpenseRequest { codeExpense?: string; description?: string; typeExpenseId?: number; farmId?: string; purchaseDate?: string; dueDate?: string; }
+
+// ── ItemExpense ────────────────────────────────────────────────────────────────
+export interface ItemExpenseModel {
+  id:                 number;
+  expenseId:          number;
+  quantity:           number;
+  unitPrice:          number;
+  totalPrice:         number;
+  productId:          number;
+  productDescription: string;
+}
+export interface CreateItemExpenseRequest { expenseId: number; quantity: number; unitPrice: number; totalPrice: number; productId: number; }
+export interface UpdateItemExpenseRequest { quantity?: number; unitPrice?: number; totalPrice?: number; productId?: number; }
+
+// ── MaintenanceService ─────────────────────────────────────────────────────────
+export interface MaintenanceServiceModel {
+  id:                         number;
+  description:                string;
+  typeMaintenanceId:          number;
+  typeMaintenanceDescription: string;
+  isActive:                   boolean;
+}
+export interface CreateMaintenanceServiceRequest { description: string; typeMaintenanceId: number; }
+export interface UpdateMaintenanceServiceRequest { description?: string; typeMaintenanceId?: number; }

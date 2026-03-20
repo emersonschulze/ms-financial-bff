@@ -59,6 +59,20 @@ export async function httpDelete(url: string, options?: RequestOptions): Promise
   }
 }
 
+export async function httpPatch<T>(url: string, options?: RequestOptions): Promise<T> {
+  const response = await fetch(url, {
+    ...options,
+    method:  'PATCH',
+    headers: buildHeaders(options?.headers),
+  });
+
+  if (!response.ok) {
+    throw new HttpError(response.status, await response.text(), url);
+  }
+
+  return response.json() as Promise<T>;
+}
+
 function buildUrl(url: string, params?: Record<string, string>): string {
   if (!params) return url;
   const query = new URLSearchParams(params).toString();
