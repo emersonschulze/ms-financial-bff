@@ -8,21 +8,21 @@ const service = new ItemExpenseService();
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ expenseId: string }> },
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const { expenseId } = await params;
+  const { id } = await params;
 
-  logger.info('[expenses] GET items request received', { expenseId });
+  logger.info('[expenses] GET items request received', { expenseId: id });
 
   try {
-    const data    = await service.getAllByExpense(Number(expenseId));
+    const data    = await service.getAllByExpense(Number(id));
     const adapted = adaptItemExpenseList(data);
 
-    logger.info('[expenses] GET items completed', { expenseId, total: adapted.length });
+    logger.info('[expenses] GET items completed', { expenseId: id, total: adapted.length });
 
     return NextResponse.json(adapted);
   } catch (error) {
-    return handleError(error, '[expenses] GET items failed', expenseId);
+    return handleError(error, '[expenses] GET items failed', id);
   }
 }
 

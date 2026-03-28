@@ -9,6 +9,7 @@ const PUBLIC_ROUTES = [
   '/docs',
   '/api/v1/modules',
   '/api/v1/type-maintenances',
+  '/api/v1/product-categories',
   '/api/v1/product-unit-of-measures',
 ];
 
