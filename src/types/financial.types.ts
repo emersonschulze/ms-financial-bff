@@ -87,6 +87,8 @@ export interface ExpenseModel {
   farmId:                 string;
   purchaseDate:           string;
   dueDate:                string;
+  isPaid:                 boolean;
+  totalAmount:            number;
 }
 export interface CreateExpenseRequest { codeExpense: string; description: string; typeExpenseId: number; farmId: string; purchaseDate: string; dueDate: string; }
 export interface UpdateExpenseRequest { codeExpense?: string; description?: string; typeExpenseId?: number; farmId?: string; purchaseDate?: string; dueDate?: string; }
@@ -103,6 +105,29 @@ export interface ItemExpenseModel {
 }
 export interface CreateItemExpenseRequest { expenseId: number; quantity: number; unitPrice: number; totalPrice: number; productId: number; }
 export interface UpdateItemExpenseRequest { quantity?: number; unitPrice?: number; totalPrice?: number; productId?: number; }
+
+// ── PaymentHistory ─────────────────────────────────────────────────────────────
+export interface PaymentHistoryModel {
+  id:            number;
+  expenseId:     number;
+  paymentMethod: string;
+  paidAmount:    number;
+  paymentDate:   string;
+  createdAt:     string;
+}
+export interface MarkExpenseAsPaidRequest {
+  paymentMethod: string;  // "cash" | "card" | "check"
+  paidAmount:    number;
+  paymentDate:   string;  // ISO date string
+}
+
+// ── ExpenseSummary ─────────────────────────────────────────────────────────────
+export interface ExpenseSummaryBucket { count: number; totalAmount: number; }
+export interface ExpenseSummaryModel {
+  due5Days:  ExpenseSummaryBucket;
+  due30Days: ExpenseSummaryBucket;
+  overdue:   ExpenseSummaryBucket;
+}
 
 // ── MaintenanceService ─────────────────────────────────────────────────────────
 export interface MaintenanceServiceModel {

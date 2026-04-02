@@ -1,5 +1,5 @@
 import { httpDelete, httpGet, httpPost, httpPut } from '@/lib/http-client';
-import type { ExpenseModel, CreateExpenseRequest, UpdateExpenseRequest } from '@/types/financial.types';
+import type { ExpenseModel, CreateExpenseRequest, UpdateExpenseRequest, MarkExpenseAsPaidRequest, ExpenseSummaryModel } from '@/types/financial.types';
 
 const BASE_URL = process.env.FINANCIAL_PROCESS_URL!;
 
@@ -22,5 +22,16 @@ export class ExpenseService {
 
   async delete(id: number): Promise<void> {
     return httpDelete(`${BASE_URL}/api/v1/expenses/${id}`);
+  }
+
+  async pay(id: number, body: MarkExpenseAsPaidRequest): Promise<ExpenseModel> {
+    return httpPost<ExpenseModel>(`${BASE_URL}/api/v1/expenses/${id}/pay`, body);
+  }
+
+  async getSummary(farmId?: string): Promise<ExpenseSummaryModel> {
+    const url = farmId
+      ? `${BASE_URL}/api/v1/expenses/summary?farmId=${encodeURIComponent(farmId)}`
+      : `${BASE_URL}/api/v1/expenses/summary`;
+    return httpGet<ExpenseSummaryModel>(url);
   }
 }
